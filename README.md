@@ -17,7 +17,7 @@ Then we can get another estimate of reliability with Cronbach’s alpha.  Cronba
 ```{r}
 setwd("~/Desktop/QualData")
 both5 = read.csv("both5.csv", header = TRUE)
-both5 = both5[c("Q1_1", "Q1_2", "Q1_3", "Q1_4", "Q1_5", "Q1_6")]
+both5 = both5[c("Q1_1", "Q1_2", "Q1_3", "Q1_4")]
 cor(both5, both5)
 
 library(psych)
@@ -29,10 +29,14 @@ Next, I need to set up the confirmatory factor analysis.  I library the lavaan p
 Unfortunately, the unidimenstional model (i.e. model measuring satisfaction) is not a good fit for the data.  Our first case are the chi-square statistics which compare the observed and model implied covariance matrices.  The chi-square statistics are both significant providing an indication that observed data (i.e. the covariance matrix of items) is significantly different from the model estiamted.  However, the Chi-square statistic is notoriously problematic with large sample sizes therefore, we need to look other statistics that are not as senstive to sample size.  Therefore, we can look at CFI and TLI, which provide an indication of the percentage of improvement from the observed model over the null model.  Usually values of .8 or higher are regarded as adequate.  Unfortunately, both the CFI and TLI are both below .8, which demonstrate the unidimensional model is not a good fit.  Two other statistics that revolve around the residuals which are the difference between the estimated and observed the coviarnace matrices.  The RMSEA and SRMR both estimate the residuals and usually values below .1 are considered adequate.  Unforutnately, both the RMSEA and SRMR are both above .1.
 ```{r}
 library(lavaan)
-cfaSEL = 'Satisfaction = ~ Q1_1 + Q1_2 + Q1_3 + Q1_4 + Q1_5 + Q1_6'
+cfaSEL = 'Satisfaction = ~ Q1_1 + Q1_2 + Q1_3 + Q1_4'
 cfaSEL2 = cfa(cfaSEL, estimator = "MLR", data = both5)
 summary(cfaSEL2, fit.measures = TRUE)
 ```
+Because of the poor fit for the cfa, one way to analyze what went wrong it to analyze the residuals.  That is analyze the difference between the observed and estimated covariance matrix between the items.  Because each of the items is on the same scale, we can look at the unstandarized estimates to evaluate which items specific items are not fitting the model.  It appears as though 
+```{r}
+resid(cfaSEL2)$cov
 
+```
 
 
