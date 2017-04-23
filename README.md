@@ -82,9 +82,10 @@ both2 = read.csv("both2.csv", header = TRUE)
 both2 = both2[c("Q1_1", "Q1_2", "Q1_3", "Q1_5")]
 
 cor(both2, both2)
-
+library(apaTables)
+apa.cor.table(both2,table.number = 1, filename="ex.CorTable1.doc")
 library(psych)
-alpha(both5)
+alpha(both2)
 
 
 library(lavaan)
