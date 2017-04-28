@@ -92,7 +92,7 @@ library(lavaan)
 both2 = cbind(both2, Q36Invar)
 names(both2) = c("Q1_1", "Q1_2", "Q1_3", "Q1_5", "Q36Invar")
 cfaSEL = 'Satisfaction = ~ Q1_1 + Q1_2 + Q1_3 + Q1_5'
-cfaSEL2 = cfa(cfaSEL, estimator = "MLR", data = both2)
+cfaSEL2 = cfa(cfaSEL, estimator = "MLR", data = both2, rotation = "promax")
 summary(cfaSEL2, fit.measures = TRUE)
 library(semTools)
 measurementInvariance(cfaSEL, data = both2, group = "Q36Invar")
